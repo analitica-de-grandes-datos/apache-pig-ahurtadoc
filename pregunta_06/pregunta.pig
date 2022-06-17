@@ -14,3 +14,10 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+lines = LOAD 'data.tsv' AS (letter:chararray, col2:BAG{}, col3:MAP[]);
+
+keys = FOREACH lines GENERATE Flatten(KEYSET(col3)) as key;
+grouped = GROUP keys BY key;
+result = FOREACH grouped GENERATE group, COUNT(keys);
+
+STORE result INTO 'output' USING PigStorage(',');

@@ -14,3 +14,11 @@ $ pig -x local -f pregunta.pig
 
         >>> Escriba su respuesta a partir de este punto <<<
 */
+lines = LOAD 'data.tsv' AS (letter:chararray, bags:chararray, maps:chararray);
+
+mapped = FOREACH lines GENERATE letter, TOKENIZE(bags, ',') as c2, TOKENIZE(maps,',') as c3;
+counted = FOREACH mapped GENERATE letter, COUNT(c2) as count2, COUNT(c3) as count3;
+
+result = ORDER counted BY letter, count2, count3 ASC;
+
+STORE result INTO 'output' USING PigStorage(',');
