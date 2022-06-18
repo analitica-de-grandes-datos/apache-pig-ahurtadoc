@@ -33,3 +33,8 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id:int, name:chararray, lastname:chararray);
+
+transformed = FOREACH lines GENERATE lastname, UPPER(lastname), LOWER(lastname);
+result = ORDER transformed BY lastname ASC;
+STORE result INTO 'output' USING PigStorage(',');

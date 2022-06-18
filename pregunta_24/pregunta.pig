@@ -19,4 +19,8 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id,name,lastname,birthday:chararray);
 
+result = FOREACH lines GENERATE REGEX_EXTRACT(birthday, '(.*{4})-(.*{2})-(.*{2})', 2);
+
+STORE result INTO 'output' USING PigStorage('\t');

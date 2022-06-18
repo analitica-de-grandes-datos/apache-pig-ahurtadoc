@@ -14,3 +14,10 @@ $ pig -x local -f pregunta.pig
         >>> Escriba su respuesta a partir de este punto <<<
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id, name, lastname, birthday:datetime);
+
+years = FOREACH lines GENERATE GetYear(birthday) as year;
+grouped = GROUP years BY year;
+result = FOREACH grouped GENERATE group, COUNT(years);
+
+STORE result INTO 'output' USING PigStorage(',');
