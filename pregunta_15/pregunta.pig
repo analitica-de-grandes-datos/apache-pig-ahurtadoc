@@ -25,4 +25,4 @@ lines = LOAD 'data.csv' USING PigStorage(',') AS (id, name:chararray, lastname, 
 colors = FOREACH lines GENERATE name, color;
 result = FILTER colors BY (name matches '.*^[Z].*') AND (color matches 'blue');
 
-STORE result INTO 'output' USING PigStorage(',');
+STORE result INTO 'output' USING PigStorage('\t');
