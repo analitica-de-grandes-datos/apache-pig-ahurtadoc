@@ -46,5 +46,4 @@ result = FOREACH dates GENERATE birthday, REPLACE(REPLACE(REPLACE(
          'aug', 'ago'),
     m1, m2;
 
-dump result;
---STORE result INTO 'output' USING PigStorage(',');
+STORE result INTO 'output' USING PigStorage(',');

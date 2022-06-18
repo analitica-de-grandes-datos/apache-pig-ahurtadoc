@@ -36,8 +36,8 @@ $ pig -x local -f pregunta.pig
 lines = LOAD 'data.csv' USING PigStorage(',') AS (id, name, lastname, birthday:chararray);
 
 dates = FOREACH lines GENERATE birthday,
-    SUBSTRING(birthday, 6, 7) as d1,
-    SUBSTRING(birthday, 5, 7) as d2,
+    SUBSTRING(birthday, 8, 10) as d1,
+    SUBSTRING(birthday, 8, 9) as d2,
     REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
     ToString(ToDate(birthday), 'EEEE'),
     'Monday', 'lunes'),
