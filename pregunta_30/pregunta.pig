@@ -37,7 +37,7 @@ lines = LOAD 'data.csv' USING PigStorage(',') AS (id, name, lastname, birthday:c
 
 dates = FOREACH lines GENERATE birthday,
     SUBSTRING(birthday, 8, 10) as d1,
-    SUBSTRING(birthday, 9, 10) as d2,
+    GetDay(ToDate(birthday)) as d2,
     REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE(
     ToString(ToDate(birthday), 'EEEE'),
     'Monday', 'lunes'),
