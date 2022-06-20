@@ -40,10 +40,11 @@ dates = FOREACH lines GENERATE birthday, LOWER(ToString(ToDate(birthday), 'MMM')
     SUBSTRING(birthday, 5, 7) as m1,
     GetMonth(ToDate(birthday)) as m2;
 
-result = FOREACH dates GENERATE birthday, REPLACE(REPLACE(REPLACE(
+result = FOREACH dates GENERATE birthday, REPLACE(REPLACE(REPLACE(REPLACE(
     namedMonth, 'jan', 'ene'),
          'apr', 'abr'),
          'aug', 'ago'),
+         'dec', 'dic'),
     m1, m2;
 
 STORE result INTO 'output' USING PigStorage(',');
