@@ -20,3 +20,9 @@ $ pig -x local -f pregunta.pig
 
 */
 
+lines = LOAD 'data.csv' USING PigStorage(',') AS (id, name, lastname, date, color:chararray);
+
+colors = FOREACH lines GENERATE color;
+result = FILTER colors BY NOT (color matches '.*^[b].*');
+
+STORE result INTO 'output' USING PigStorage(',');
