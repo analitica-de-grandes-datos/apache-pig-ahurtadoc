@@ -38,7 +38,7 @@ lines = LOAD 'data.csv' USING PigStorage(',') AS (id, name, lastname, birthday:c
 
 dates = FOREACH lines GENERATE birthday, LOWER(ToString(ToDate(birthday), 'MMM')) as namedMonth,
     SUBSTRING(birthday, 5, 7) as m1,
-    SUBSTRING(birthday, 6, 7) as m2;
+    GetMonth(ToDate(birthday)) as m2;
 
 result = FOREACH dates GENERATE birthday, REPLACE(REPLACE(REPLACE(
     namedMonth, 'jan', 'ene'),
